@@ -1,40 +1,41 @@
 # SYNTRIX
 
 **Connect the evidence. Reveal the pattern.**
-Built by **Team PAWTENTIAL** — Avipsa Bal, Pragati Bohra, Kartik Sanap
 
-SYNTRIX is an investigation intelligence platform. You give it scattered case records (plain text, CSV call
-records, JSON ledgers) and it builds one connected, time-aware network, shows you where the hidden links are,
-and explains every link with the exact sentence it came from.
+Made by **Team PAWTENTIAL**: Avipsa Bal, Pragati Bohra and Kartik Sanap.
 
-It gives **leads, not verdicts**. A person always makes the call.
+SYNTRIX helps investigators find links that are easy to miss. You give it messy case records, and it joins
+them into one picture of who and what is connected, and shows the proof for every link.
+
+It gives **leads, not verdicts**. It never says someone is guilty. A person always makes the call.
 
 ---
 
-## Why we built it
+## The problem we're solving
 
-Investigators usually don't lack data. The data is already there, just spread across different files and
-cases. A phone number in one case can show up in another, written a different way, and nobody notices.
-We wanted a tool that catches that connection *and* shows the proof, so it can be checked by a human.
+In most investigations the clues are already there. They're just spread over different files and different
+cases. A phone number in one case might show up in another, written a little differently, and nobody notices.
+Even when someone does spot a link, it's hard to see what it was based on.
 
-## What it does
+## What SYNTRIX does
 
-- **Takes any input.** Paste text or upload `.txt`, `.csv` or `.json`. It finds people, phones, vehicles,
-  places, companies, money and FIR numbers.
-- **Matches the same thing written differently.** `98765 43210` = `+91-9876543210`,
-  `MP 09 AB 1234` = `MP09AB1234`, `R. Kulkarni` = `Ravi Kulkarni`.
-- **Network view.** Every record becomes a node. Dashed ring = appears in more than one case.
-  Thicker line = more confident link.
-- **Signal Engine.** Ranks leads with a score you can read (cases 50%, link confidence 30%, evidence 15%,
-  connections 5%). No AI model involved, 0 model calls.
-- **Connection Explainer.** Pick any two entities and see the path, the confidence, the weakest link and the
-  source sentences with the entities highlighted.
-- **What-If Simulator.** Switch a link off and see which connections and leads break.
-- **Timeline.** Every relationship with its date, in order.
+- **Reads your records.** Paste text or upload a `.txt`, `.csv` or `.json` file. It picks out people, phones,
+  vehicles, places, companies and money.
+- **Knows when two things are the same.** `98765 43210` and `+91-9876543210` are one phone. `MP 09 AB 1234`
+  and `MP09AB1234` are one vehicle. `R. Kulkarni` and `Ravi Kulkarni` are one person.
+- **Draws the network.** Everything becomes a dot, and the lines show how they're linked. A dashed red ring
+  means it appears in more than one case. A thicker line means we're more sure of the link.
+- **Ranks leads (Signal Engine).** Each lead gets a score you can read: how many cases it's in, how sure the
+  links are, how much evidence there is, how many connections. No AI model is used, so zero model calls.
+- **Explains a connection.** Pick any two things and see the path between them, how confident it is, the
+  weakest link, and the exact sentences it came from.
+- **Tests a theory (What-If).** Switch a link off and see which connections and leads break.
+- **Shows a timeline.** Every link with its date, oldest first.
 
 ## Try it in 2 minutes
 
-1. Click **Clear all**, set the case box to `CASE-101`, paste this and press **Analyze text**:
+1. Open the app and click **Clear all**.
+2. Type `CASE-101` in the case box, paste this, and click **Analyze text**:
 
 ```
 Date: 14 Oct 2026
@@ -43,7 +44,7 @@ Ravi Kulkarni paid Rs. 2,50,000 to Sunrise Traders on 14 Oct 2026.
 Vehicle MH12AB3456 was parked outside Sunrise Traders in Pune.
 ```
 
-2. Change the case box to `CASE-102`, paste this and press **Analyze text**:
+3. Change the case box to `CASE-102`, paste this, and click **Analyze text**:
 
 ```
 Date: 20 Oct 2026
@@ -52,60 +53,60 @@ Vehicle MH 12 AB 3456 is registered to Sunrise Traders Pvt Ltd.
 Sunrise Traders paid Rs. 1,00,000 to Neha Joshi on 20 Oct 2026.
 ```
 
-You should see: `3 new entities, 5 new links, 4 merges, 4 cross-case`. Open **Network**, then **Connection Explainer**
-(Ravi Kulkarni → Neha Joshi) and **What-If**. More sample files are in `sample_data/`.
+You should see: **3 new entities, 5 new links, 4 merges, 4 cross-case.** The second case was written
+differently, but SYNTRIX still matched the phone, vehicle, person and company.
 
-## How it works
+Now try the **Network**, then **Connection Explainer** (Ravi Kulkarni to Neha Joshi), then **What-If**.
+There are more demo files in the `sample_data` folder to upload.
 
-```
-Case records → Extract entities → Resolve duplicates → Build dated links → Rank leads → Investigator view
-```
+## Run it on your computer
 
-Everything runs in the browser (`frontend/src/engine.ts`). Your data stays on your machine in `localStorage`.
-
-## Tech
-
-- React + TypeScript + Vite (UI and graph view)
-- TypeScript engine: extraction, entity resolution, graph, path-finding, What-If, Signal Engine
-- Python (FastAPI + NetworkX) reference version of the same pipeline in `backend/`
-
-## Run it
+You need Node.js installed.
 
 ```bash
 cd frontend
 npm install
-npm run dev      # http://localhost:5173
+npm run dev
 ```
 
-Optional Python backend (not needed by the UI):
+Then open http://localhost:5173. That's all. The whole thing runs in your browser, and your data stays on
+your own machine (saved in the browser's local storage).
 
-```bash
-cd backend
-pip install -r requirements.txt
-python run.py    # http://127.0.0.1:8000/docs
+## How it works
+
+```
+Records  ->  Find entities  ->  Match duplicates  ->  Build dated links  ->  Rank leads  ->  Investigator view
 ```
 
-## Project structure
+The brain of the project is one file: `frontend/src/engine.ts`.
 
-| Path | What's in it |
+## What's in the folder
+
+| Folder / file | What it is |
 |---|---|
-| `frontend/src/engine.ts` | The whole engine |
-| `frontend/src/App.tsx` | Screens |
-| `frontend/src/GraphCanvas.tsx` | Interactive network graph |
-| `backend/` | Python reference version |
-| `sample_data/` | Fictional demo files |
+| `frontend/src/engine.ts` | The engine: reads records, matches things, builds the network, scores leads |
+| `frontend/src/App.tsx` | The screens (Overview, Network, Explainer, What-If, Timeline) |
+| `frontend/src/GraphCanvas.tsx` | The draggable network graph |
+| `backend/` | A Python (FastAPI + NetworkX) version of the same pipeline. The app doesn't need it |
+| `sample_data/` | Fictional demo files you can upload |
 
-## Honest limits
+To try the Python version: `cd backend`, `pip install -r requirements.txt`, `python run.py`.
 
-- Extraction is rule-based (no ML model), so lowercase names in free text can be missed. CSV and JSON
-  column headers help a lot.
-- Confidence numbers are prototype scores, not calibrated probabilities.
-- The timeline is a dated list, not an animated replay yet.
-- A compact local LLM, PostgreSQL and logins/audit logs are **planned**, not built.
-- All data here is fictional. Don't use this on real case data.
+## Built with
 
-## What's next
+React, TypeScript and Vite for the app. The engine is TypeScript. The Python version uses FastAPI and NetworkX.
 
-1. Benchmark matching quality, speed and false matches on labelled data.
-2. Add persistent storage, access control and audit logs.
-3. Try an optional small local LLM for messy text, and only keep it if the measured results justify it.
+## Being honest about the limits
+
+- It finds names using rules, not a trained model. Lowercase names in free text can be missed. CSV and JSON
+  files work better because the column headers help.
+- The confidence numbers are prototype scores, not real probabilities.
+- The timeline is a dated list, not an animation yet.
+- Not built yet, only planned: a small local language model, a PostgreSQL database, logins and audit logs.
+- All the data here is made up. Please don't use it on real case data.
+
+## What we'd do next
+
+1. Test how accurate the matching is, and how fast it runs, on proper labelled data.
+2. Add a real database, logins and an audit trail.
+3. Try a small local language model for messy text, and keep it only if the results show it helps.
