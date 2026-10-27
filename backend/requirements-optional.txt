@@ -1,0 +1,3 @@
+# Optional upgrades — SYNTRIX runs fully without them.
+spacy>=3.7          # then: python -m spacy download en_core_web_sm  (adds statistical NER on top of the rule engine)
+pypdf>=4.0          # lets you upload PDF case files
