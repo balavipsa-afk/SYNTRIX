@@ -110,3 +110,10 @@ React, TypeScript and Vite for the app. The engine is TypeScript. The Python ver
 1. Test how accurate the matching is, and how fast it runs, on proper labelled data.
 2. Add a real database, logins and an audit trail.
 3. Try a small local language model for messy text, and keep it only if the results show it helps.
+
+
+## Screenshot
+
+<img width="1535" height="1013" alt="Screenshot 2026-10-27 123552" src="https://github.com/user-attachments/assets/52f61de7-29da-4a6a-b194-cfccc504c6f6" />
+
+
