@@ -1,0 +1,8 @@
+caller_name,caller_number,receiver_name,receiver_number,date,time,duration_sec,tower_location
+Alice Mehra,9876543210,Rohan Verma,9811122233,2026-09-10,09:14,320,Bhopal
+Alice Mehra,9876543210,Rohan Verma,9811122233,2026-09-11,18:02,145,Bhopal
+Rohan Verma,9811122233,Alice Mehra,9876543210,2026-09-12,21:40,610,Bhopal
+Rohan Verma,9811122233,Karan Malhotra,9899900011,2026-09-15,11:20,95,Indore
+Rohan Verma,9811122233,Karan Malhotra,9899900011,2026-09-16,08:55,230,Indore
+Karan Malhotra,9899900011,Meera Kapoor,9822200044,2026-09-19,19:30,410,Ujjain
+Meera Kapoor,9822200044,Alice Mehra,9876543210,2026-09-20,10:05,75,Delhi
